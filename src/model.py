@@ -43,13 +43,49 @@ class Map:
     def get_neighbours(self, field):
         # Get a list of available neighbouring fields (N, S, W, E) of the given field
         # if they are not on the map, they are not available
-        pass
+        x = field.x
+        y = field.y
+        
+        # All possible directions
+        n = (x, y-1)
+        s = (x, y+1)
+        w = (x-1, y)
+        e = (x+1, y)
+
+        neighbours = []
+        directions = [n, s, w, e]
+
+        for direction in directions:
+            if direction in self.fields:
+                neighbours.append(self.get_field(direction[0], direction[1]))
+        
+        return neighbours
+            
 
     @staticmethod
     def from_string(map_string):
         # Static method to create a Map object from a multiline string
-        pass
 
+        # map of all possible elevations
+        elevation_mapping = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
+                    'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18,
+                    's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26
+        }
+
+        # Create list of all lines
+        lines = map_string.strip().split('\n')
+
+        map = Map()
+
+        # Allocate x, y and elevation to the characters 
+        for y, line in enumerate(lines):
+            for x, char in enumerate(line):
+                elevation = elevation_mapping[char]
+                map.add_field(x, y, elevation)
+            
+        return map
+    
+   
 class Walker:
     # Walker class represents a walker with a position on the map
     def __init__(self, position):
