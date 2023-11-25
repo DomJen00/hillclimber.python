@@ -43,8 +43,7 @@ class Map:
     def get_neighbours(self, field):
         # Get a list of available neighbouring fields (N, S, W, E) of the given field
         # if they are not on the map, they are not available
-        x = field.x
-        y = field.y
+        x, y = field
         
         # All possible directions
         n = (x, y-1)
@@ -67,9 +66,9 @@ class Map:
         # Static method to create a Map object from a multiline string
 
         # map of all possible elevations
-        elevation_mapping = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
-                    'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18,
-                    's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26
+        elevation_mapping = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8,
+                    'j': 9, 'k': 10, 'l': 11, 'm': 12, 'n': 13, 'o': 14, 'p': 15, 'q': 16, 'r': 17,
+                    's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25
         }
 
         # Create list of all lines
@@ -109,9 +108,16 @@ class Path:
             self.fields.pop()
 
 
-multilinestring = """\
+if __name__ == '__main__':
+
+    multilinestring = """\
 abc
 def
 ghi"""
 
-print(multilinestring)
+    print(multilinestring)
+    
+    map = Map()
+    world = map.from_string(multilinestring)
+    neigh = world.get_neighbours((1, 1))
+    print(neigh)
